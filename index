@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Таза Жер — Чистый Кыргызстан</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+:root {
+  --green: #1a6b3c;
+  --green-light: #2d9e5a;
+  --green-pale: #e8f7ee;
+  --gold: #e8a020;
+  --gold-light: #fdf3e0;
+  --red: #c0392b;
+  --white: #fafaf8;
+  --dark: #0d1a10;
+  --gray: #6b7a6e;
+  --gray-light: #f0f3f0;
+  --border: rgba(26,107,60,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: 1.1rem;
+  color: var(--green);
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--gray); transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--green); }
+.nav-cta {
+  background: var(--green); color: #fff;
+  border: none; padding: 0.55rem 1.4rem;
+  border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+  cursor: pointer; transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--green-light); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 6rem 2.5rem 4rem;
+  gap: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -20%; right: -10%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(45,158,90,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--green-pale); color: var(--green);
+  border: 1px solid rgba(26,107,60,0.2);
+  padding: 0.35rem 1rem; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+.dot { width: 6px; height: 6px; background: var(--green-light); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+.hero-title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.05; letter-spacing: -0.03em;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+}
+.hero-title .accent { color: var(--green); }
+.hero-title .gold { color: var(--gold); }
+
+.hero-sub {
+  font-size: 1rem; line-height: 1.7; color: var(--gray);
+  max-width: 480px; margin-bottom: 2.5rem;
+}
+.hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--green); color: #fff;
+  border: none; padding: 0.8rem 2rem;
+  border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { background: var(--green-light); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent; color: var(--green);
+  border: 1.5px solid var(--green); padding: 0.8rem 2rem;
+  border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-outline:hover { background: var(--green-pale); }
+
+.hero-visual {
+  position: relative;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.stat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.stat-icon.g { background: var(--green-pale); }
+.stat-icon.y { background: var(--gold-light); }
+.stat-icon.r { background: #fdecea; }
+.stat-num { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 1.3rem; color: var(--dark); }
+.stat-label { font-size: 0.78rem; color: var(--gray); margin-top: 0.1rem; }
+.floating-badge {
+  position: absolute; top: -1rem; right: -1rem;
+  background: var(--gold); color: var(--dark);
+  font-family: 'Unbounded', sans-serif; font-size: 0.65rem; font-weight: 700;
+  padding: 0.4rem 0.9rem; border-radius: 100px;
+  transform: rotate(3deg);
+}
+
+/* SECTION BASE */
+section { padding: 5rem 2.5rem; }
+.section-label {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--dark); margin-bottom: 1rem;
+}
+.section-sub { font-size: 1rem; color: var(--gray); line-height: 1.7; max-width: 560px; }
+
+/* PROBLEMS */
+.problems { background: var(--dark); }
+.problems .section-label { color: var(--gold); }
+.problems .section-title { color: var(--white); }
+.problems .section-sub { color: rgba(255,255,255,0.5); }
+.problems-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem; margin-top: 3rem;
+}
+.problem-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 1.5rem;
+}
+.problem-num {
+  font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 2.5rem;
+  color: var(--gold); line-height: 1; margin-bottom: 0.5rem;
+}
+.problem-text { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+/* HOW IT WORKS — DEMO */
+.demo-section { background: var(--gray-light); }
+.steps-flow {
+  display: flex; align-items: flex-start; gap: 0;
+  margin: 3rem 0 2.5rem; position: relative;
+}
+.steps-flow::before {
+  content: '';
+  position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 2px; background: linear-gradient(90deg, var(--green-light), var(--gold));
+  z-index: 0;
+}
+.step {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  text-align: center; position: relative; z-index: 1;
+}
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--white); border: 2px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 1rem;
+  color: var(--green); margin-bottom: 0.75rem;
+}
+.step.active .step-num { background: var(--green); color: #fff; }
+.step-label { font-size: 0.78rem; font-weight: 500; color: var(--dark); }
+
+/* AI DEMO CARD */
+.demo-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 2rem;
+  max-width: 680px; margin: 0 auto;
+}
+.upload-zone {
+  border: 2px dashed rgba(26,107,60,0.3);
+  border-radius: 14px; padding: 2.5rem;
+  text-align: center; cursor: pointer;
+  transition: all 0.2s; background: var(--green-pale);
+  position: relative; overflow: hidden;
+}
+.upload-zone:hover { border-color: var(--green); background: rgba(45,158,90,0.08); }
+.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.upload-text { font-size: 0.9rem; color: var(--gray); }
+.upload-text strong { color: var(--green); }
+
+#preview-img {
+  width: 100%; border-radius: 10px; max-height: 220px; object-fit: cover;
+  display: none; margin-bottom: 1rem;
+}
+
+.ai-result { display: none; margin-top: 1.5rem; }
+.ai-analyzing {
+  display: none; margin-top: 1.5rem; text-align: center; padding: 1.5rem;
+}
+.ai-bar-wrap { background: var(--gray-light); border-radius: 100px; height: 6px; margin: 1rem 0 0.5rem; overflow: hidden; }
+.ai-bar { height: 100%; background: linear-gradient(90deg, var(--green), var(--gold)); border-radius: 100px; width: 0; transition: width 0.1s linear; }
+.ai-status { font-size: 0.8rem; color: var(--gray); }
+
+.result-header {
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;
+}
+.result-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--green-pale); color: var(--green);
+  border: 1px solid rgba(26,107,60,0.2);
+  padding: 0.3rem 0.9rem; border-radius: 100px;
+  font-size: 0.8rem; font-weight: 500;
+}
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+.result-item {
+  background: var(--gray-light); border-radius: 12px; padding: 1rem;
+}
+.result-item-label { font-size: 0.72rem; color: var(--gray); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+.result-item-value { font-family: 'Unbounded', sans-serif; font-size: 1rem; font-weight: 700; color: var(--dark); }
+.confidence-bar-wrap { background: rgba(26,107,60,0.1); border-radius: 100px; height: 8px; margin-top: 0.5rem; overflow: hidden; }
+.confidence-bar { height: 100%; background: var(--green-light); border-radius: 100px; transition: width 0.6s ease; }
+
+.reward-box {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+  border-radius: 14px; padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  color: #fff;
+}
+.reward-left .reward-label { font-size: 0.75rem; opacity: 0.8; margin-bottom: 0.25rem; }
+.reward-left .reward-amount { font-family: 'Unbounded', sans-serif; font-size: 1.5rem; font-weight: 700; }
+.reward-btn {
+  background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.6rem 1.2rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+  cursor: pointer; transition: background 0.2s;
+}
+.reward-btn:hover { background: rgba(255,255,255,0.3); }
+
+/* MAP SECTION */
+#map { height: 420px; border-radius: 16px; border: 1px solid var(--border); margin-top: 3rem; }
+.map-legend { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--gray); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* DASHBOARD */
+.dashboard-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-top: 3rem; }
+.dash-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.5rem;
+}
+.dash-card.accent { background: var(--green); }
+.dash-card.accent .dash-label { color: rgba(255,255,255,0.7); }
+.dash-card.accent .dash-value { color: #fff; }
+.dash-label { font-size: 0.75rem; color: var(--gray); font-weight: 500; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+.dash-value { font-family: 'Unbounded', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--dark); }
+.dash-sub { font-size: 0.72rem; color: var(--gray); margin-top: 0.3rem; }
+.dash-card.accent .dash-sub { color: rgba(255,255,255,0.5); }
+.trend { font-size: 0.72rem; margin-top: 0.3rem; color: var(--green-light); font-weight: 500; }
+
+/* ECOCHAIN */
+.chain-flow {
+  display: flex; align-items: center; gap: 0; margin-top: 3rem;
+  overflow-x: auto; padding-bottom: 1rem;
+}
+.chain-step {
+  flex: 1; min-width: 140px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.25rem;
+  text-align: center; position: relative;
+}
+.chain-step:not(:last-child)::after {
+  content: '→';
+  position: absolute; right: -16px; top: 50%; transform: translateY(-50%);
+  color: var(--green); font-size: 1.1rem; font-weight: 700; z-index: 1;
+}
+.chain-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+.chain-title { font-size: 0.78rem; font-weight: 500; color: var(--dark); margin-bottom: 0.25rem; }
+.chain-sub { font-size: 0.7rem; color: var(--gray); line-height: 1.4; }
+
+/* CTA */
+.cta-section {
+  background: var(--dark); text-align: center;
+  padding: 6rem 2.5rem;
+}
+.cta-section .section-title { color: var(--white); max-width: 600px; margin: 0 auto 1rem; }
+.cta-section .section-sub { color: rgba(255,255,255,0.5); max-width: 480px; margin: 0 auto 2.5rem; }
+.cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-gold {
+  background: var(--gold); color: var(--dark);
+  border: none; padding: 0.9rem 2.2rem;
+  border-radius: 100px; font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+}
+.btn-gold:hover { transform: translateY(-2px); }
+.btn-white {
+  background: transparent; color: var(--white);
+  border: 1.5px solid rgba(255,255,255,0.3); padding: 0.9rem 2.2rem;
+  border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-white:hover { border-color: rgba(255,255,255,0.6); }
+
+/* FOOTER */
+footer {
+  padding: 2rem 2.5rem; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.8rem; color: var(--gray);
+}
+.footer-logo { font-family: 'Unbounded', sans-serif; font-weight: 700; color: var(--green); font-size: 0.9rem; }
+
+/* LANG TOGGLE */
+.lang-toggle {
+  display: flex; gap: 0; background: var(--gray-light); border-radius: 100px; padding: 3px;
+}
+.lang-btn {
+  border: none; background: transparent; padding: 0.3rem 0.75rem;
+  border-radius: 100px; font-size: 0.75rem; font-weight: 500; cursor: pointer;
+  color: var(--gray); transition: all 0.2s;
+}
+.lang-btn.active { background: var(--white); color: var(--green); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 5rem 1.25rem 3rem; gap: 2rem; }
+  .hero-visual { display: none; }
+  section { padding: 3.5rem 1.25rem; }
+  .problems-grid { grid-template-columns: 1fr; }
+  .dashboard-grid { grid-template-columns: 1fr 1fr; }
+  .chain-flow { gap: 1rem; }
+  .chain-step::after { display: none; }
+  .steps-flow::before { display: none; }
+  .steps-flow { gap: 0.5rem; }
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Таза<span>Жер</span></div>
+  <div class="nav-links">
+    <a href="#problem">Проблема</a>
+    <a href="#demo">Демо</a>
+    <a href="#map-section">Карта</a>
+    <a href="#chain">EcoChain</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('kg')">KY</button>
+    </div>
+    <button class="nav-cta" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+      <span data-ru="Попробовать" data-kg="Байкап көр">Попробовать</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">
+      <span class="dot"></span>
+      <span data-ru="MVP · Апрель 2026 · Кыргызстан" data-kg="MVP · Апрель 2026 · Кыргызстан">MVP · Апрель 2026 · Кыргызстан</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="accent" data-ru="Таза Жер" data-kg="Таза Жер">Таза Жер</span><br/>
+      <span data-ru="чистим страну" data-kg="өлкөбүздү тазалайлы">чистим страну</span><br/>
+      <span class="gold" data-ru="вместе и с умом" data-kg="бирге жана акылдуулук менен">вместе и с умом</span>
+    </h1>
+    <p class="hero-sub" data-ru="ИИ распознаёт мусор, сообщества зарабатывают на его сборе, государство получает реальные данные. Готовимся к запрету пластика с 2027 года." data-kg="ЖИ таштандыны таанып, коомдоштуктар аны жыйноодон табыш алат, мамлекет чыныгы маалыматтарды алат.">
+      ИИ распознаёт мусор, сообщества зарабатывают на его сборе, государство получает реальные данные. Готовимся к запрету пластика с 2027 года.
+    </p>
+    <div class="hero-buttons">
+      <a href="#demo" class="btn-primary" data-ru="Попробовать демо →" data-kg="Демону байкап көр →">Попробовать демо →</a>
+      <a href="#chain" class="btn-outline" data-ru="Как это работает" data-kg="Бул кантип иштейт">Как это работает</a>
+    </div>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="floating-badge">🇰🇬 Made in KG</div>
+    <div class="stat-card">
+      <div class="stat-icon g">🗑️</div>
+      <div>
+        <div class="stat-num">1.4M</div>
+        <div class="stat-label" data-ru="тонн ТБО в год в КР" data-kg="жылына КРда ТКК тоннасы">тонн ТБО в год в КР</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon y">♻️</div>
+      <div>
+        <div class="stat-num">3%</div>
+        <div class="stat-label" data-ru="перерабатывается сейчас" data-kg="азыр кайра иштетилет">перерабатывается сейчас</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon r">📅</div>
+      <div>
+        <div class="stat-num">2027</div>
+        <div class="stat-label" data-ru="запрет пластиковых пакетов" data-kg="пластик баштыкчаларга тыюу">запрет пластиковых пакетов</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problems" id="problem">
+  <div class="section-label" data-ru="Проблема" data-kg="Маселе">Проблема</div>
+  <h2 class="section-title" data-ru="Мусорят все — от детей до аксакалов" data-kg="Баары таштандылайт — балдардан аксакалдарга чейин">Мусорят все — от детей до аксакалов</h2>
+  <p class="section-sub" data-ru="В Кыргызстане нет культуры раздельного сбора, данных о загрязнении и инструментов для вовлечения граждан. Мы решаем это через ИИ и реальную экономическую выгоду." data-kg="Кыргызстанда бөлүп чогултуу маданияты, булганычтоо маалыматтары жана жарандарды тартуу куралдары жок.">
+    В Кыргызстане нет культуры раздельного сбора, данных о загрязнении и инструментов для вовлечения граждан. Мы решаем это через ИИ и реальную экономическую выгоду.
+  </p>
+  <div class="problems-grid reveal">
+    <div class="problem-card">
+      <div class="problem-num">150M</div>
+      <div class="problem-text" data-ru="сомов утилизационного сбора — собраны, но нет системы распределения и прозрачности" data-kg="сом утилизация жыйымы — чогулду, бирок бөлүштүрүү системасы жок">сомов утилизационного сбора — собраны, но нет системы распределения и прозрачности</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">~1K</div>
+      <div class="problem-text" data-ru="нелегальных свалок по всей стране — в горах, у рек, вдоль туристических маршрутов" data-kg="өлкө боюнча мыйзамсыз таштандылыктар — тоолордо, дарыялардын боюнда">нелегальных свалок по всей стране — в горах, у рек, вдоль туристических маршрутов</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">0</div>
+      <div class="problem-text" data-ru="реальных данных о загрязнении в реальном времени для принятия решений властями" data-kg="бийликтер үчүн чыныгы убакыттагы булганычтоо маалыматтары жок">реальных данных о загрязнении в реальном времени для принятия решений властями</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS / DEMO -->
+<section class="demo-section" id="demo">
+  <div class="section-label" data-ru="Как это работает" data-kg="Бул кантип иштейт">Как это работает</div>
+  <h2 class="section-title" data-ru="Попробуйте прямо сейчас" data-kg="Азыр эле байкап көрүңүз">Попробуйте прямо сейчас</h2>
+  <p class="section-sub" data-ru="Загрузите фото мусора — ИИ определит тип отхода, оценит масштаб и начислит вознаграждение." data-kg="Таштандынын сүрөтүн жүктөңүз — ЖИ калдыктын түрүн аныктайт жана сыйлык эсептейт.">
+    Загрузите фото мусора — ИИ определит тип отхода, оценит масштаб и начислит вознаграждение.
+  </p>
+
+  <div class="steps-flow">
+    <div class="step active">
+      <div class="step-num">1</div>
+      <div class="step-label" data-ru="Фото" data-kg="Сүрөт">Фото</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-label" data-ru="ИИ анализ" data-kg="ЖИ талдоо">ИИ анализ</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-label" data-ru="Результат" data-kg="Натыйжа">Результат</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-label" data-ru="Вознаграждение" data-kg="Сыйлык">Вознаграждение</div>
+    </div>
+  </div>
+
+  <div class="demo-card reveal">
+    <img id="preview-img" alt="Preview"/>
+
+    <div class="upload-zone" id="upload-zone">
+      <input type="file" id="file-input" accept="image/*"/>
+      <div class="upload-icon">📷</div>
+      <p class="upload-text">
+        <strong data-ru="Нажмите или перетащите фото мусора" data-kg="Таштандынын сүрөтүн жүктөңүз">Нажмите или перетащите фото мусора</strong>
+      </p>
+      <p class="upload-text" style="margin-top:0.3rem;font-size:0.78rem;" data-ru="JPG, PNG — любой мусор подойдёт для демо" data-kg="JPG, PNG — кандай таштанды болсо да жарайт">JPG, PNG — любой мусор подойдёт для демо</p>
+    </div>
+
+    <div class="ai-analyzing" id="ai-analyzing">
+      <p style="font-size:0.85rem;color:var(--gray);margin-bottom:0.75rem;" id="ai-status-text" data-ru="Инициализация модели..." data-kg="Модель баштоо...">Инициализация модели...</p>
+      <div class="ai-bar-wrap"><div class="ai-bar" id="ai-bar"></div></div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.5rem;" data-ru="YOLOv8 · TACO dataset · fine-tuned on KG waste" data-kg="YOLOv8 · TACO dataset · KG таштандысында дообучен">YOLOv8 · TACO dataset · fine-tuned on KG waste</p>
+    </div>
+
+    <div class="ai-result" id="ai-result">
+      <div class="result-header">
+        <div class="result-badge">✓ <span data-ru="ИИ определил" data-kg="ЖИ аныктады">ИИ определил</span></div>
+      </div>
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="result-item-label" data-ru="Тип отхода" data-kg="Калдык түрү">Тип отхода</div>
+          <div class="result-item-value" id="waste-type">—</div>
+        </div>
+        <div class="result-item">
+          <div class="result-item-label" data-ru="Уверенность ИИ" data-kg="ЖИ ишенимдүүлүгү">Уверенность ИИ</div>
+          <div class="result-item-value" id="confidence-val">—</div>
+          <div class="confidence-bar-wrap"><div class="confidence-bar" id="confidence-bar" style="width:0%"></div></div>
+        </div>
+        <div class="result-item">
+          <div class="result-item-label" data-ru="Приоритет" data-kg="Артыкчылык">Приоритет</div>
+          <div class="result-item-value" id="priority-val">—</div>
+        </div>
+        <div class="result-item">
+          <div class="result-item-label" data-ru="Объём примерный" data-kg="Болжолдуу көлөм">Объём примерный</div>
+          <div class="result-item-value" id="volume-val">—</div>
+        </div>
+      </div>
+      <div class="reward-box">
+        <div class="reward-left">
+          <div class="reward-label" data-ru="Ваше вознаграждение" data-kg="Сиздин сыйлыгыңыз">Ваше вознаграждение</div>
+          <div class="reward-amount" id="reward-amount">+180 сом</div>
+        </div>
+        <button class="reward-btn" onclick="alert('В реальном приложении сумма поступит на Mbank/Elsom!')" data-ru="Принять задание →" data-kg="Тапшырманы кабыл ал →">Принять задание →</button>
+      </div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;text-align:center;" data-ru="Данные переданы в дашборд и в Эко Оператор КР" data-kg="Маалыматтар башкаруу тактасына жана Эко Операторго берилди">Данные переданы в дашборд и в Эко Оператор КР</p>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section">
+  <div class="section-label" data-ru="Карта загрязнений" data-kg="Булганычтоо картасы">Карта загрязнений</div>
+  <h2 class="section-title" data-ru="Горячие точки в реальном времени" data-kg="Чыныгы убакыттагы ысык чекиттер">Горячие точки в реальном времени</h2>
+  <p class="section-sub" data-ru="Каждое фото от граждан попадает на карту. ИИ агрегирует данные и показывает приоритеты очистки для властей и переработчиков." data-kg="Жарандардан келген ар бир сүрөт картага түшөт. ЖИ маалыматтарды жыйнайт.">
+    Каждое фото от граждан попадает на карту. ИИ агрегирует данные и показывает приоритеты очистки для властей и переработчиков.
+  </p>
+  <div id="map" class="reveal"></div>
+  <div class="map-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div><span data-ru="Высокий приоритет" data-kg="Жогорку артыкчылык">Высокий приоритет</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e8a020;"></div><span data-ru="Средний приоритет" data-kg="Орточо артыкчылык">Средний приоритет</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1a6b3c;"></div><span data-ru="Очищено" data-kg="Тазаланды">Очищено</span></div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section style="background:var(--gray-light);">
+  <div class="section-label" data-ru="Дашборд" data-kg="Башкаруу тактасы">Дашборд</div>
+  <h2 class="section-title" data-ru="Данные меняют систему" data-kg="Маалыматтар системаны өзгөртөт">Данные меняют систему</h2>
+  <p class="section-sub" data-ru="Агрегированная аналитика для Министерства природных ресурсов, Эко Оператора и доноров — UNDP, ADB, ЕС." data-kg="Министерство, Эко Оператор жана донорлор үчүн аналитика.">
+    Агрегированная аналитика для Министерства природных ресурсов, Эко Оператора и доноров — UNDP, ADB, ЕС.
+  </p>
+  <div class="dashboard-grid reveal">
+    <div class="dash-card accent">
+      <div class="dash-label" data-ru="Собрано отходов" data-kg="Чогулган калдыктар">Собрано отходов</div>
+      <div class="dash-value">4.2т</div>
+      <div class="dash-sub" data-ru="за последние 30 дней" data-kg="акыркы 30 күндө">за последние 30 дней</div>
+      <div class="trend">↑ +18% к прошлому месяцу</div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-label" data-ru="Активных пользователей" data-kg="Активдүү колдонуучулар">Активных пользователей</div>
+      <div class="dash-value">1 240</div>
+      <div class="dash-sub" data-ru="Бишкек + Иссык-Куль" data-kg="Бишкек + Ысык-Көл">Бишкек + Иссык-Куль</div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-label" data-ru="CO₂ эквивалент" data-kg="CO₂ эквиваленти">CO₂ эквивалент</div>
+      <div class="dash-value">6.8т</div>
+      <div class="dash-sub" data-ru="предотвращено выбросов" data-kg="чыгарындылар алдын алынды">предотвращено выбросов</div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-label" data-ru="Выплачено гражданам" data-kg="Жарандарга төлөндү">Выплачено гражданам</div>
+      <div class="dash-value">186K</div>
+      <div class="dash-sub" data-ru="сомов через Mbank/Elsom" data-kg="сом Mbank/Elsom аркылуу">сомов через Mbank/Elsom</div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOCHAIN -->
+<section id="chain">
+  <div class="section-label" data-ru="EcoChain" data-kg="EcoChain">EcoChain</div>
+  <h2 class="section-title" data-ru="Прозрачная цепочка от фото до переработки" data-kg="Сүрөттөн кайра иштетүүгө чейин ачык чынжыр">Прозрачная цепочка от фото до переработки</h2>
+  <p class="section-sub" data-ru="Каждый шаг записывается и верифицируется. Это позволяет бизнесу получать ESG-отчёты, а государству — данные для NDC 3.0." data-kg="Ар бир кадам жазылат жана текшерилет. Бизнес ESG отчёттарын, мамлекет NDC 3.0 маалыматтарын алат.">
+    Каждый шаг записывается и верифицируется. Это позволяет бизнесу получать ESG-отчёты, а государству — данные для NDC 3.0.
+  </p>
+  <div class="chain-flow reveal">
+    <div class="chain-step">
+      <div class="chain-icon">📱</div>
+      <div class="chain-title" data-ru="Гражданин фиксирует" data-kg="Жаран белгилейт">Гражданин фиксирует</div>
+      <div class="chain-sub" data-ru="Фото + геолокация" data-kg="Сүрөт + геолокация">Фото + геолокация</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-icon">🤖</div>
+      <div class="chain-title" data-ru="ИИ анализирует" data-kg="ЖИ талдайт">ИИ анализирует</div>
+      <div class="chain-sub" data-ru="YOLOv8 классифицирует тип и объём" data-kg="YOLOv8 түрүн аныктайт">YOLOv8 классифицирует</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-icon">🎯</div>
+      <div class="chain-title" data-ru="Задание создаётся" data-kg="Тапшырма түзүлөт">Задание создаётся</div>
+      <div class="chain-sub" data-ru="Сообщество получает задачу" data-kg="Коомдоштук тапшырма алат">Сообщество получает</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-icon">♻️</div>
+      <div class="chain-title" data-ru="Сдача переработчику" data-kg="Кайра иштетүүчүгө тапшыруу">Сдача переработчику</div>
+      <div class="chain-sub" data-ru="130+ зарегистрированных" data-kg="130+ катталган">130+ зарегистрированных</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-icon">💰</div>
+      <div class="chain-title" data-ru="Вознаграждение" data-kg="Сыйлык">Вознаграждение</div>
+      <div class="chain-sub" data-ru="Mbank / Elsom / эко-кредиты" data-kg="Mbank / Elsom / эко-кредиттер">Mbank / Elsom</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label" style="color:var(--gold);" data-ru="Присоединяйтесь" data-kg="Кошулуңуз">Присоединяйтесь</div>
+  <h2 class="section-title" data-ru="Стать партнёром, инвестором или пилотным регионом" data-kg="Өнөктөш, инвестор же пилоттук аймак болуу">Стать партнёром, инвестором или пилотным регионом</h2>
+  <p class="section-sub" data-ru="Ищем первых инвесторов, гранты UNDP/ADB, государственных партнёров и пилотные аймаки вокруг Иссык-Куля." data-kg="Биринчи инвесторлорду, UNDP/ADB гранттарын жана пилоттук аймактарды издейбиз.">
+    Ищем первых инвесторов, гранты UNDP/ADB, государственных партнёров и пилотные аймаки вокруг Иссык-Куля.
+  </p>
+  <div class="cta-buttons">
+    <a href="mailto:hello@tazajer.kg" class="btn-gold" data-ru="Связаться с командой" data-kg="Команда менен байланышуу">Связаться с командой</a>
+    <button class="btn-white" onclick="alert('Pitch deck — скоро!')" data-ru="Скачать Pitch Deck" data-kg="Pitch Deck жүктөө">Скачать Pitch Deck</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ТазаЖер EcoChain</div>
+  <div data-ru="MVP · Апрель 2026 · Бишкек, Кыргызстан" data-kg="MVP · Апрель 2026 · Бишкек, Кыргызстан">MVP · Апрель 2026 · Бишкек, Кыргызстан</div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ─── LANGUAGE ───────────────────────────────────────────────
+let currentLang = 'ru';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-ru]').forEach(el => {
+    el.textContent = el.getAttribute('data-' + lang) || el.getAttribute('data-ru');
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+}
+
+// ─── WASTE DATA ──────────────────────────────────────────────
+const wasteData = [
+  { ru: 'Пластик ПЭТ', kg: 'ПЭТ пластик', conf: 91, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴' }, volume: '~8–12 кг', reward: 220 },
+  { ru: 'Пластиковые пакеты', kg: 'Пластик баштыкчалар', conf: 87, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴' }, volume: '~3–5 кг', reward: 180 },
+  { ru: 'Стеклянные бутылки', kg: 'Айнек бөтөлкөлөр', conf: 94, priority: { ru: 'Средний 🟡', kg: 'Орточо 🟡' }, volume: '~5–7 кг', reward: 150 },
+  { ru: 'Органические отходы', kg: 'Органикалык калдыктар', conf: 78, priority: { ru: 'Низкий 🟢', kg: 'Төмөнкү 🟢' }, volume: '~10–15 кг', reward: 90 },
+  { ru: 'Металлические банки', kg: 'Металл банкалар', conf: 89, priority: { ru: 'Средний 🟡', kg: 'Орточо 🟡' }, volume: '~2–4 кг', reward: 200 },
+  { ru: 'Смешанный мусор', kg: 'Аралаш таштанды', conf: 82, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴' }, volume: '~15–20 кг', reward: 260 },
+];
+
+// ─── AI DEMO ─────────────────────────────────────────────────
+const fileInput = document.getElementById('file-input');
+const previewImg = document.getElementById('preview-img');
+const uploadZone = document.getElementById('upload-zone');
+const aiAnalyzing = document.getElementById('ai-analyzing');
+const aiResult = document.getElementById('ai-result');
+const aiBar = document.getElementById('ai-bar');
+const aiStatusText = document.getElementById('ai-status-text');
+
+const statusMessages = {
+  ru: ['Инициализация модели...', 'Загрузка весов YOLOv8...', 'Препроцессинг изображения...', 'Детекция объектов...', 'Классификация отходов...', 'Расчёт вознаграждения...'],
+  kg: ['Модель баштоо...', 'YOLOv8 салмактарын жүктөө...', 'Сүрөттү иштетүү...', 'Объектилерди аныктоо...', 'Калдыктарды классификациялоо...', 'Сыйлык эсептөө...']
+};
+
+fileInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    previewImg.src = ev.target.result;
+    previewImg.style.display = 'block';
+    uploadZone.style.display = 'none';
+    aiResult.style.display = 'none';
+    runAI();
+  };
+  reader.readAsDataURL(file);
+});
+
+function runAI() {
+  aiAnalyzing.style.display = 'block';
+  aiBar.style.width = '0%';
+  const msgs = statusMessages[currentLang] || statusMessages.ru;
+  let progress = 0;
+  let msgIdx = 0;
+  aiStatusText.textContent = msgs[0];
+
+  const interval = setInterval(() => {
+    progress += Math.random() * 4 + 2;
+    if (progress > 100) progress = 100;
+    aiBar.style.width = progress + '%';
+    const newIdx = Math.floor(progress / (100 / msgs.length));
+    if (newIdx !== msgIdx && newIdx < msgs.length) {
+      msgIdx = newIdx;
+      aiStatusText.textContent = msgs[msgIdx];
+    }
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(showResult, 300);
+    }
+  }, 80);
+}
+
+function showResult() {
+  aiAnalyzing.style.display = 'none';
+  const pick = wasteData[Math.floor(Math.random() * wasteData.length)];
+
+  document.getElementById('waste-type').textContent = currentLang === 'kg' ? pick.kg : pick.ru;
+  document.getElementById('confidence-val').textContent = pick.conf + '%';
+  document.getElementById('confidence-bar').style.width = pick.conf + '%';
+  document.getElementById('priority-val').textContent = currentLang === 'kg' ? pick.priority.kg : pick.priority.ru;
+  document.getElementById('volume-val').textContent = pick.volume;
+  document.getElementById('reward-amount').textContent = '+' + pick.reward + ' сом';
+
+  aiResult.style.display = 'block';
+  aiResult.style.opacity = '0';
+  aiResult.style.transform = 'translateY(10px)';
+  aiResult.style.transition = 'opacity 0.4s, transform 0.4s';
+  requestAnimationFrame(() => {
+    aiResult.style.opacity = '1';
+    aiResult.style.transform = 'translateY(0)';
+  });
+}
+
+// ─── MAP ─────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl: true }).setView([42.0, 74.5], 6);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap', maxZoom: 18
+}).addTo(map);
+
+const hotspots = [
+  { lat: 42.87, lng: 74.59, name: 'Бишкек — Ала-Тоо', type: 'high', ru: 'Пластик, ~2.1 тонны', kg: 'Пластик, ~2.1 тонна' },
+  { lat: 42.62, lng: 77.09, name: 'Чолпон-Ата', type: 'high', ru: 'Берег Иссык-Куля, ~1.8 тонны', kg: 'Ысык-Көл жагасы, ~1.8 тонна' },
+  { lat: 42.48, lng: 78.39, name: 'Каракол', type: 'medium', ru: 'Пластик + органика, ~0.9 тонны', kg: 'Пластик + органика, ~0.9 тонна' },
+  { lat: 40.52, lng: 72.79, name: 'Ош', type: 'high', ru: 'Смешанный мусор, ~1.5 тонны', kg: 'Аралаш таштанды, ~1.5 тонна' },
+  { lat: 40.93, lng: 73.00, name: 'Жалал-Абад', type: 'medium', ru: 'Стекло + пластик, ~0.6 тонны', kg: 'Айнек + пластик, ~0.6 тонна' },
+  { lat: 41.42, lng: 75.99, name: 'Нарын', type: 'medium', ru: 'Горный маршрут, ~0.4 тонны', kg: 'Тоо жолу, ~0.4 тонна' },
+  { lat: 42.72, lng: 74.24, name: 'Кара-Балта', type: 'clean', ru: 'Очищено 3 дня назад', kg: '3 күн мурун тазаланды' },
+  { lat: 42.18, lng: 76.07, name: 'Балыкчы', type: 'medium', ru: 'Рыболовные сети + пластик', kg: 'Балык торлору + пластик' },
+];
+
+const colors = { high: '#c0392b', medium: '#e8a020', clean: '#1a6b3c' };
+
+hotspots.forEach(h => {
+  const marker = L.circleMarker([h.lat, h.lng], {
+    radius: h.type === 'high' ? 14 : h.type === 'medium' ? 10 : 8,
+    fillColor: colors[h.type], color: '#fff', weight: 2,
+    opacity: 1, fillOpacity: 0.85
+  }).addTo(map);
+  marker.bindPopup(`<strong>${h.name}</strong><br/>${h.ru}<br/><small style="color:#1a6b3c;">Таза Жер EcoChain</small>`);
+});
+
+// ─── REVEAL ON SCROLL ─────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
