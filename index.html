@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Таза Жер — Чистый Кыргызстан</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;400;500&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
 :root {
@@ -28,6 +28,12 @@ body {
   background: var(--white);
   color: var(--dark);
   overflow-x: hidden;
+}
+body.lang-kg {
+  font-family: 'Noto Sans', sans-serif;
+}
+body.lang-tr {
+  font-family: 'Inter', sans-serif;
 }
 
 /* NAV */
@@ -390,18 +396,19 @@ footer {
 <nav>
   <div class="nav-logo">Таза<span>Жер</span></div>
   <div class="nav-links">
-    <a href="#problem">Проблема</a>
-    <a href="#demo">Демо</a>
-    <a href="#map-section">Карта</a>
-    <a href="#chain">EcoChain</a>
+    <a href="#problem" data-ru="Проблема" data-kg="Маселе" data-tr="Sorun">Проблема</a>
+    <a href="#demo" data-ru="Демо" data-kg="Демо" data-tr="Demo">Демо</a>
+    <a href="#map-section" data-ru="Карта" data-kg="Карта" data-tr="Harita">Карта</a>
+    <a href="#chain" data-ru="EcoChain" data-kg="EcoChain" data-tr="EcoChain">EcoChain</a>
   </div>
   <div style="display:flex;align-items:center;gap:1rem;">
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('ru')">RU</button>
       <button class="lang-btn" onclick="setLang('kg')">KY</button>
+      <button class="lang-btn" onclick="setLang('tr')">TR</button>
     </div>
     <button class="nav-cta" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
-      <span data-ru="Попробовать" data-kg="Байкап көр">Попробовать</span>
+      <span data-ru="Попробовать" data-kg="Байкап көр" data-tr="Dene">Попробовать</span>
     </button>
   </div>
 </nav>
@@ -411,19 +418,19 @@ footer {
   <div class="hero-content">
     <div class="hero-label">
       <span class="dot"></span>
-      <span data-ru="MVP · Апрель 2026 · Кыргызстан" data-kg="MVP · Апрель 2026 · Кыргызстан">MVP · Апрель 2026 · Кыргызстан</span>
+      <span data-ru="MVP · Апрель 2026 · Кыргызстан" data-kg="MVP · Апрель 2026 · Кыргызстан" data-tr="MVP · Nisan 2026 · Kırgızistan">MVP · Апрель 2026 · Кыргызстан</span>
     </div>
     <h1 class="hero-title">
-      <span class="accent" data-ru="Таза Жер" data-kg="Таза Жер">Таза Жер</span><br/>
-      <span data-ru="чистим страну" data-kg="өлкөбүздү тазалайлы">чистим страну</span><br/>
-      <span class="gold" data-ru="вместе и с умом" data-kg="бирге жана акылдуулук менен">вместе и с умом</span>
+      <span class="accent" data-ru="Таза Жер" data-kg="Таза Жер" data-tr="Taза Жер">Таза Жер</span><br/>
+      <span data-ru="чистим страну" data-kg="өлкөбүздү тазалайлы" data-tr="ülkeyi temizliyoruz">чистим страну</span><br/>
+      <span class="gold" data-ru="вместе и с умом" data-kg="бирге жана акылдуулук менен" data-tr="birlikte ve akıllıca">вместе и с умом</span>
     </h1>
-    <p class="hero-sub" data-ru="ИИ распознаёт мусор, сообщества зарабатывают на его сборе, государство получает реальные данные. Готовимся к запрету пластика с 2027 года." data-kg="ЖИ таштандыны таанып, коомдоштуктар аны жыйноодон табыш алат, мамлекет чыныгы маалыматтарды алат.">
+    <p class="hero-sub" data-ru="ИИ распознаёт мусор, сообщества зарабатывают на его сборе, государство получает реальные данные. Готовимся к запрету пластика с 2027 года." data-kg="ЖИ таштандыны таанып, коомдоштуктар аны жыйноодон табыш алат, мамлекет чыныгы маалыматтарды алат." data-tr="YZ çöpü tanır, topluluklar toplamadan kazanır, devlet gerçek veri alır. 2027 plastik yasağına hazırlanıyoruz.">
       ИИ распознаёт мусор, сообщества зарабатывают на его сборе, государство получает реальные данные. Готовимся к запрету пластика с 2027 года.
     </p>
     <div class="hero-buttons">
-      <a href="#demo" class="btn-primary" data-ru="Попробовать демо →" data-kg="Демону байкап көр →">Попробовать демо →</a>
-      <a href="#chain" class="btn-outline" data-ru="Как это работает" data-kg="Бул кантип иштейт">Как это работает</a>
+      <a href="#demo" class="btn-primary" data-ru="Попробовать демо →" data-kg="Демону байкап көр →" data-tr="Demoyu dene →">Попробовать демо →</a>
+      <a href="#chain" class="btn-outline" data-ru="Как это работает" data-kg="Бул кантип иштейт" data-tr="Nasıl çalışır">Как это работает</a>
     </div>
   </div>
   <div class="hero-visual reveal">
@@ -432,21 +439,21 @@ footer {
       <div class="stat-icon g">🗑️</div>
       <div>
         <div class="stat-num">1.4M</div>
-        <div class="stat-label" data-ru="тонн ТБО в год в КР" data-kg="жылына КРда ТКК тоннасы">тонн ТБО в год в КР</div>
+        <div class="stat-label" data-ru="тонн ТБО в год в КР" data-kg="жылына КРда ТКК тоннасы" data-tr="yıllık KR'da katı atık tonu">тонн ТБО в год в КР</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon y">♻️</div>
       <div>
         <div class="stat-num">3%</div>
-        <div class="stat-label" data-ru="перерабатывается сейчас" data-kg="азыр кайра иштетилет">перерабатывается сейчас</div>
+        <div class="stat-label" data-ru="перерабатывается сейчас" data-kg="азыр кайра иштетилет" data-tr="şu an geri dönüştürülüyor">перерабатывается сейчас</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon r">📅</div>
       <div>
         <div class="stat-num">2027</div>
-        <div class="stat-label" data-ru="запрет пластиковых пакетов" data-kg="пластик баштыкчаларга тыюу">запрет пластиковых пакетов</div>
+        <div class="stat-label" data-ru="запрет пластиковых пакетов" data-kg="пластик баштыкчаларга тыюу" data-tr="plastik poşet yasağı">запрет пластиковых пакетов</div>
       </div>
     </div>
   </div>
@@ -454,51 +461,51 @@ footer {
 
 <!-- PROBLEM -->
 <section class="problems" id="problem">
-  <div class="section-label" data-ru="Проблема" data-kg="Маселе">Проблема</div>
-  <h2 class="section-title" data-ru="Мусорят все — от детей до аксакалов" data-kg="Баары таштандылайт — балдардан аксакалдарга чейин">Мусорят все — от детей до аксакалов</h2>
-  <p class="section-sub" data-ru="В Кыргызстане нет культуры раздельного сбора, данных о загрязнении и инструментов для вовлечения граждан. Мы решаем это через ИИ и реальную экономическую выгоду." data-kg="Кыргызстанда бөлүп чогултуу маданияты, булганычтоо маалыматтары жана жарандарды тартуу куралдары жок.">
+  <div class="section-label" data-ru="Проблема" data-kg="Маселе" data-tr="Sorun">Проблема</div>
+  <h2 class="section-title" data-ru="Мусорят все — от детей до аксакалов" data-kg="Баары таштандылайт — балдардан аксакалдарга чейин" data-tr="Herkes çöp atıyor — çocuklardan yaşlılara">Мусорят все — от детей до аксакалов</h2>
+  <p class="section-sub" data-ru="В Кыргызстане нет культуры раздельного сбора, данных о загрязнении и инструментов для вовлечения граждан. Мы решаем это через ИИ и реальную экономическую выгоду." data-kg="Кыргызстанда бөлүп чогултуу маданияты, булганычтоо маалыматтары жана жарандарды тартуу куралдары жок." data-tr="Kırgızistan'da ayrı toplama kültürü, kirlilik verisi ve vatandaş katılım araçları yok. Bunu YZ ve gerçek ekonomik çıkarla çözüyoruz.">
     В Кыргызстане нет культуры раздельного сбора, данных о загрязнении и инструментов для вовлечения граждан. Мы решаем это через ИИ и реальную экономическую выгоду.
   </p>
   <div class="problems-grid reveal">
     <div class="problem-card">
       <div class="problem-num">150M</div>
-      <div class="problem-text" data-ru="сомов утилизационного сбора — собраны, но нет системы распределения и прозрачности" data-kg="сом утилизация жыйымы — чогулду, бирок бөлүштүрүү системасы жок">сомов утилизационного сбора — собраны, но нет системы распределения и прозрачности</div>
+      <div class="problem-text" data-ru="сомов утилизационного сбора — собраны, но нет системы распределения и прозрачности" data-kg="сом утилизация жыйымы — чогулду, бирок бөлүштүрүү системасы жок" data-tr="som bertaraf ücreti toplandı ama dağıtım sistemi ve şeffaflık yok">сомов утилизационного сбора — собраны, но нет системы распределения и прозрачности</div>
     </div>
     <div class="problem-card">
       <div class="problem-num">~1K</div>
-      <div class="problem-text" data-ru="нелегальных свалок по всей стране — в горах, у рек, вдоль туристических маршрутов" data-kg="өлкө боюнча мыйзамсыз таштандылыктар — тоолордо, дарыялардын боюнда">нелегальных свалок по всей стране — в горах, у рек, вдоль туристических маршрутов</div>
+      <div class="problem-text" data-ru="нелегальных свалок по всей стране — в горах, у рек, вдоль туристических маршрутов" data-kg="өлкө боюнча мыйзамсыз таштандылыктар — тоолордо, дарыялардын боюнда" data-tr="ülke genelinde yasadışı çöplük — dağlarda, nehir kenarlarında, turizm güzergahlarında">нелегальных свалок по всей стране — в горах, у рек, вдоль туристических маршрутов</div>
     </div>
     <div class="problem-card">
       <div class="problem-num">0</div>
-      <div class="problem-text" data-ru="реальных данных о загрязнении в реальном времени для принятия решений властями" data-kg="бийликтер үчүн чыныгы убакыттагы булганычтоо маалыматтары жок">реальных данных о загрязнении в реальном времени для принятия решений властями</div>
+      <div class="problem-text" data-ru="реальных данных о загрязнении в реальном времени для принятия решений властями" data-kg="бийликтер үчүн чыныгы убакыттагы булганычтоо маалыматтары жок" data-tr="yetkililerin karar alması için gerçek zamanlı kirlilik verisi yok">реальных данных о загрязнении в реальном времени для принятия решений властями</div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS / DEMO -->
 <section class="demo-section" id="demo">
-  <div class="section-label" data-ru="Как это работает" data-kg="Бул кантип иштейт">Как это работает</div>
-  <h2 class="section-title" data-ru="Попробуйте прямо сейчас" data-kg="Азыр эле байкап көрүңүз">Попробуйте прямо сейчас</h2>
-  <p class="section-sub" data-ru="Загрузите фото мусора — ИИ определит тип отхода, оценит масштаб и начислит вознаграждение." data-kg="Таштандынын сүрөтүн жүктөңүз — ЖИ калдыктын түрүн аныктайт жана сыйлык эсептейт.">
+  <div class="section-label" data-ru="Как это работает" data-kg="Бул кантип иштейт" data-tr="Nasıl çalışır">Как это работает</div>
+  <h2 class="section-title" data-ru="Попробуйте прямо сейчас" data-kg="Азыр эле байкап көрүңүз" data-tr="Şimdi deneyin">Попробуйте прямо сейчас</h2>
+  <p class="section-sub" data-ru="Загрузите фото мусора — ИИ определит тип отхода, оценит масштаб и начислит вознаграждение." data-kg="Таштандынын сүрөтүн жүктөңүз — ЖИ калдыктын түрүн аныктайт жана сыйлык эсептейт." data-tr="Çöp fotoğrafı yükleyin — YZ atık türünü belirler, boyutu değerlendirir ve ödül hesaplar.">
     Загрузите фото мусора — ИИ определит тип отхода, оценит масштаб и начислит вознаграждение.
   </p>
 
   <div class="steps-flow">
     <div class="step active">
       <div class="step-num">1</div>
-      <div class="step-label" data-ru="Фото" data-kg="Сүрөт">Фото</div>
+      <div class="step-label" data-ru="Фото" data-kg="Сүрөт" data-tr="Fotoğraf">Фото</div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-label" data-ru="ИИ анализ" data-kg="ЖИ талдоо">ИИ анализ</div>
+      <div class="step-label" data-ru="ИИ анализ" data-kg="ЖИ талдоо" data-tr="YZ analizi">ИИ анализ</div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-label" data-ru="Результат" data-kg="Натыйжа">Результат</div>
+      <div class="step-label" data-ru="Результат" data-kg="Натыйжа" data-tr="Sonuç">Результат</div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-label" data-ru="Вознаграждение" data-kg="Сыйлык">Вознаграждение</div>
+      <div class="step-label" data-ru="Вознаграждение" data-kg="Сыйлык" data-tr="Ödül">Вознаграждение</div>
     </div>
   </div>
 
@@ -509,160 +516,166 @@ footer {
       <input type="file" id="file-input" accept="image/*"/>
       <div class="upload-icon">📷</div>
       <p class="upload-text">
-        <strong data-ru="Нажмите или перетащите фото мусора" data-kg="Таштандынын сүрөтүн жүктөңүз">Нажмите или перетащите фото мусора</strong>
+        <strong data-ru="Нажмите или перетащите фото мусора" data-kg="Таштандынын сүрөтүн жүктөңүз" data-tr="Çöp fotoğrafı yükleyin veya sürükleyin">Нажмите или перетащите фото мусора</strong>
       </p>
-      <p class="upload-text" style="margin-top:0.3rem;font-size:0.78rem;" data-ru="JPG, PNG — любой мусор подойдёт для демо" data-kg="JPG, PNG — кандай таштанды болсо да жарайт">JPG, PNG — любой мусор подойдёт для демо</p>
+      <p class="upload-text" style="margin-top:0.3rem;font-size:0.78rem;" data-ru="JPG, PNG — любой мусор подойдёт для демо" data-kg="JPG, PNG — кандай таштанды болсо да жарайт" data-tr="JPG, PNG — demo için her türlü çöp uygundur">JPG, PNG — любой мусор подойдёт для демо</p>
     </div>
 
     <div class="ai-analyzing" id="ai-analyzing">
-      <p style="font-size:0.85rem;color:var(--gray);margin-bottom:0.75rem;" id="ai-status-text" data-ru="Инициализация модели..." data-kg="Модель баштоо...">Инициализация модели...</p>
+      <p style="font-size:0.85rem;color:var(--gray);margin-bottom:0.75rem;" id="ai-status-text" data-ru="Инициализация модели..." data-kg="Модель баштоо..." data-tr="Model başlatılıyor...">Инициализация модели...</p>
       <div class="ai-bar-wrap"><div class="ai-bar" id="ai-bar"></div></div>
       <p style="font-size:0.75rem;color:var(--gray);margin-top:0.5rem;" data-ru="YOLOv8 · TACO dataset · fine-tuned on KG waste" data-kg="YOLOv8 · TACO dataset · KG таштандысында дообучен">YOLOv8 · TACO dataset · fine-tuned on KG waste</p>
     </div>
 
     <div class="ai-result" id="ai-result">
       <div class="result-header">
-        <div class="result-badge">✓ <span data-ru="ИИ определил" data-kg="ЖИ аныктады">ИИ определил</span></div>
+        <div class="result-badge">✓ <span data-ru="ИИ определил" data-kg="ЖИ аныктады" data-tr="YZ belirledi">ИИ определил</span></div>
       </div>
       <div class="result-grid">
         <div class="result-item">
-          <div class="result-item-label" data-ru="Тип отхода" data-kg="Калдык түрү">Тип отхода</div>
+          <div class="result-item-label" data-ru="Тип отхода" data-kg="Калдык түрү" data-tr="Atık türü">Тип отхода</div>
           <div class="result-item-value" id="waste-type">—</div>
         </div>
         <div class="result-item">
-          <div class="result-item-label" data-ru="Уверенность ИИ" data-kg="ЖИ ишенимдүүлүгү">Уверенность ИИ</div>
+          <div class="result-item-label" data-ru="Уверенность ИИ" data-kg="ЖИ ишенимдүүлүгү" data-tr="YZ güveni">Уверенность ИИ</div>
           <div class="result-item-value" id="confidence-val">—</div>
           <div class="confidence-bar-wrap"><div class="confidence-bar" id="confidence-bar" style="width:0%"></div></div>
         </div>
         <div class="result-item">
-          <div class="result-item-label" data-ru="Приоритет" data-kg="Артыкчылык">Приоритет</div>
+          <div class="result-item-label" data-ru="Приоритет" data-kg="Артыкчылык" data-tr="Öncelik">Приоритет</div>
           <div class="result-item-value" id="priority-val">—</div>
         </div>
         <div class="result-item">
-          <div class="result-item-label" data-ru="Объём примерный" data-kg="Болжолдуу көлөм">Объём примерный</div>
+          <div class="result-item-label" data-ru="Объём примерный" data-kg="Болжолдуу көлөм" data-tr="Tahmini hacim">Объём примерный</div>
           <div class="result-item-value" id="volume-val">—</div>
         </div>
       </div>
       <div class="reward-box">
         <div class="reward-left">
-          <div class="reward-label" data-ru="Ваше вознаграждение" data-kg="Сиздин сыйлыгыңыз">Ваше вознаграждение</div>
+          <div class="reward-label" data-ru="Ваше вознаграждение" data-kg="Сиздин сыйлыгыңыз" data-tr="Ödülünüz">Ваше вознаграждение</div>
           <div class="reward-amount" id="reward-amount">+180 сом</div>
         </div>
-        <button class="reward-btn" onclick="alert('В реальном приложении сумма поступит на Mbank/Elsom!')" data-ru="Принять задание →" data-kg="Тапшырманы кабыл ал →">Принять задание →</button>
+        <button class="reward-btn" onclick="alert('В реальном приложении сумма поступит на Mbank/Elsom!')" data-ru="Принять задание →" data-kg="Тапшырманы кабыл ал →" data-tr="Görevi kabul et →">Принять задание →</button>
       </div>
-      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;text-align:center;" data-ru="Данные переданы в дашборд и в Эко Оператор КР" data-kg="Маалыматтар башкаруу тактасына жана Эко Операторго берилди">Данные переданы в дашборд и в Эко Оператор КР</p>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;text-align:center;" data-ru="Данные переданы в дашборд и в Эко Оператор КР" data-kg="Маалыматтар башкаруу тактасына жана Эко Операторго берилди" data-tr="Veriler panoya ve KR Eko Operatör'e iletildi">Данные переданы в дашборд и в Эко Оператор КР</p>
     </div>
   </div>
 </section>
 
 <!-- MAP -->
 <section id="map-section">
-  <div class="section-label" data-ru="Карта загрязнений" data-kg="Булганычтоо картасы">Карта загрязнений</div>
-  <h2 class="section-title" data-ru="Горячие точки в реальном времени" data-kg="Чыныгы убакыттагы ысык чекиттер">Горячие точки в реальном времени</h2>
-  <p class="section-sub" data-ru="Каждое фото от граждан попадает на карту. ИИ агрегирует данные и показывает приоритеты очистки для властей и переработчиков." data-kg="Жарандардан келген ар бир сүрөт картага түшөт. ЖИ маалыматтарды жыйнайт.">
+  <div class="section-label" data-ru="Карта загрязнений" data-kg="Булганычтоо картасы" data-tr="Kirlilik haritası">Карта загрязнений</div>
+  <h2 class="section-title" data-ru="Горячие точки в реальном времени" data-kg="Чыныгы убакыттагы ысык чекиттер" data-tr="Gerçek zamanlı sıcak noktalar">Горячие точки в реальном времени</h2>
+  <p class="section-sub" data-ru="Каждое фото от граждан попадает на карту. ИИ агрегирует данные и показывает приоритеты очистки для властей и переработчиков." data-kg="Жарандардан келген ар бир сүрөт картага түшөт. ЖИ маалыматтарды жыйнайт." data-tr="Vatandaşların her fotoğrafı haritaya eklenir. YZ verileri toplar ve yetkililer için temizlik önceliklerini gösterir.">
     Каждое фото от граждан попадает на карту. ИИ агрегирует данные и показывает приоритеты очистки для властей и переработчиков.
   </p>
   <div id="map" class="reveal"></div>
   <div class="map-legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div><span data-ru="Высокий приоритет" data-kg="Жогорку артыкчылык">Высокий приоритет</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#e8a020;"></div><span data-ru="Средний приоритет" data-kg="Орточо артыкчылык">Средний приоритет</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#1a6b3c;"></div><span data-ru="Очищено" data-kg="Тазаланды">Очищено</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div><span data-ru="Высокий приоритет" data-kg="Жогорку артыкчылык" data-tr="Yüksek öncelik">Высокий приоритет</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e8a020;"></div><span data-ru="Средний приоритет" data-kg="Орточо артыкчылык" data-tr="Orta öncelik">Средний приоритет</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1a6b3c;"></div><span data-ru="Очищено" data-kg="Тазаланды" data-tr="Temizlendi">Очищено</span></div>
   </div>
 </section>
 
 <!-- DASHBOARD -->
 <section style="background:var(--gray-light);">
-  <div class="section-label" data-ru="Дашборд" data-kg="Башкаруу тактасы">Дашборд</div>
-  <h2 class="section-title" data-ru="Данные меняют систему" data-kg="Маалыматтар системаны өзгөртөт">Данные меняют систему</h2>
-  <p class="section-sub" data-ru="Агрегированная аналитика для Министерства природных ресурсов, Эко Оператора и доноров — UNDP, ADB, ЕС." data-kg="Министерство, Эко Оператор жана донорлор үчүн аналитика.">
+  <div class="section-label" data-ru="Дашборд" data-kg="Башкаруу тактасы" data-tr="Gösterge paneli">Дашборд</div>
+  <h2 class="section-title" data-ru="Данные меняют систему" data-kg="Маалыматтар системаны өзгөртөт" data-tr="Veriler sistemi değiştiriyor">Данные меняют систему</h2>
+  <p class="section-sub" data-ru="Агрегированная аналитика для Министерства природных ресурсов, Эко Оператора и доноров — UNDP, ADB, ЕС." data-kg="Министерство, Эко Оператор жана донорлор үчүн аналитика." data-tr="Doğal Kaynaklar Bakanlığı, Eko Operatör ve bağışçılar için toplu analitik — UNDP, ADB, AB.">
     Агрегированная аналитика для Министерства природных ресурсов, Эко Оператора и доноров — UNDP, ADB, ЕС.
   </p>
   <div class="dashboard-grid reveal">
     <div class="dash-card accent">
-      <div class="dash-label" data-ru="Собрано отходов" data-kg="Чогулган калдыктар">Собрано отходов</div>
+      <div class="dash-label" data-ru="Собрано отходов" data-kg="Чогулган калдыктар" data-tr="Toplanan atık">Собрано отходов</div>
       <div class="dash-value">4.2т</div>
-      <div class="dash-sub" data-ru="за последние 30 дней" data-kg="акыркы 30 күндө">за последние 30 дней</div>
+      <div class="dash-sub" data-ru="за последние 30 дней" data-kg="акыркы 30 күндө" data-tr="son 30 günde">за последние 30 дней</div>
       <div class="trend">↑ +18% к прошлому месяцу</div>
     </div>
     <div class="dash-card">
-      <div class="dash-label" data-ru="Активных пользователей" data-kg="Активдүү колдонуучулар">Активных пользователей</div>
+      <div class="dash-label" data-ru="Активных пользователей" data-kg="Активдүү колдонуучулар" data-tr="Aktif kullanıcılar">Активных пользователей</div>
       <div class="dash-value">1 240</div>
-      <div class="dash-sub" data-ru="Бишкек + Иссык-Куль" data-kg="Бишкек + Ысык-Көл">Бишкек + Иссык-Куль</div>
+      <div class="dash-sub" data-ru="Бишкек + Иссык-Куль" data-kg="Бишкек + Ысык-Көл" data-tr="Bişkek + Issık-Göl">Бишкек + Иссык-Куль</div>
     </div>
     <div class="dash-card">
-      <div class="dash-label" data-ru="CO₂ эквивалент" data-kg="CO₂ эквиваленти">CO₂ эквивалент</div>
+      <div class="dash-label" data-ru="CO₂ эквивалент" data-kg="CO₂ эквиваленти" data-tr="CO₂ eşdeğeri">CO₂ эквивалент</div>
       <div class="dash-value">6.8т</div>
-      <div class="dash-sub" data-ru="предотвращено выбросов" data-kg="чыгарындылар алдын алынды">предотвращено выбросов</div>
+      <div class="dash-sub" data-ru="предотвращено выбросов" data-kg="чыгарындылар алдын алынды" data-tr="önlenen emisyon">предотвращено выбросов</div>
     </div>
     <div class="dash-card">
-      <div class="dash-label" data-ru="Выплачено гражданам" data-kg="Жарандарга төлөндү">Выплачено гражданам</div>
+      <div class="dash-label" data-ru="Выплачено гражданам" data-kg="Жарандарга төлөндү" data-tr="Vatandaşlara ödenen">Выплачено гражданам</div>
       <div class="dash-value">186K</div>
-      <div class="dash-sub" data-ru="сомов через Mbank/Elsom" data-kg="сом Mbank/Elsom аркылуу">сомов через Mbank/Elsom</div>
+      <div class="dash-sub" data-ru="сомов через Mbank/Elsom" data-kg="сом Mbank/Elsom аркылуу" data-tr="som Mbank/Elsom üzerinden">сомов через Mbank/Elsom</div>
     </div>
   </div>
 </section>
 
 <!-- ECOCHAIN -->
 <section id="chain">
-  <div class="section-label" data-ru="EcoChain" data-kg="EcoChain">EcoChain</div>
-  <h2 class="section-title" data-ru="Прозрачная цепочка от фото до переработки" data-kg="Сүрөттөн кайра иштетүүгө чейин ачык чынжыр">Прозрачная цепочка от фото до переработки</h2>
-  <p class="section-sub" data-ru="Каждый шаг записывается и верифицируется. Это позволяет бизнесу получать ESG-отчёты, а государству — данные для NDC 3.0." data-kg="Ар бир кадам жазылат жана текшерилет. Бизнес ESG отчёттарын, мамлекет NDC 3.0 маалыматтарын алат.">
+  <div class="section-label" data-ru="EcoChain" data-kg="EcoChain" data-tr="EcoChain">EcoChain</div>
+  <h2 class="section-title" data-ru="Прозрачная цепочка от фото до переработки" data-kg="Сүрөттөн кайра иштетүүгө чейин ачык чынжыр" data-tr="Fotoğraftan geri dönüşüme şeffaf zincir">Прозрачная цепочка от фото до переработки</h2>
+  <p class="section-sub" data-ru="Каждый шаг записывается и верифицируется. Это позволяет бизнесу получать ESG-отчёты, а государству — данные для NDC 3.0." data-kg="Ар бир кадам жазылат жана текшерилет. Бизнес ESG отчёттарын, мамлекет NDC 3.0 маалыматтарын алат." data-tr="Her adım kaydedilir ve doğrulanır. Bu, işletmelerin ESG raporları, devletin ise NDC 3.0 verileri almasını sağlar.">
     Каждый шаг записывается и верифицируется. Это позволяет бизнесу получать ESG-отчёты, а государству — данные для NDC 3.0.
   </p>
   <div class="chain-flow reveal">
     <div class="chain-step">
       <div class="chain-icon">📱</div>
-      <div class="chain-title" data-ru="Гражданин фиксирует" data-kg="Жаран белгилейт">Гражданин фиксирует</div>
-      <div class="chain-sub" data-ru="Фото + геолокация" data-kg="Сүрөт + геолокация">Фото + геолокация</div>
+      <div class="chain-title" data-ru="Гражданин фиксирует" data-kg="Жаран белгилейт" data-tr="Vatandaş kaydeder">Гражданин фиксирует</div>
+      <div class="chain-sub" data-ru="Фото + геолокация" data-kg="Сүрөт + геолокация" data-tr="Fotoğraf + konum">Фото + геолокация</div>
     </div>
     <div class="chain-step">
       <div class="chain-icon">🤖</div>
-      <div class="chain-title" data-ru="ИИ анализирует" data-kg="ЖИ талдайт">ИИ анализирует</div>
-      <div class="chain-sub" data-ru="YOLOv8 классифицирует тип и объём" data-kg="YOLOv8 түрүн аныктайт">YOLOv8 классифицирует</div>
+      <div class="chain-title" data-ru="ИИ анализирует" data-kg="ЖИ талдайт" data-tr="YZ analiz eder">ИИ анализирует</div>
+      <div class="chain-sub" data-ru="YOLOv8 классифицирует тип и объём" data-kg="YOLOv8 түрүн аныктайт" data-tr="YOLOv8 tür ve hacmi sınıflandırır">YOLOv8 классифицирует</div>
     </div>
     <div class="chain-step">
       <div class="chain-icon">🎯</div>
-      <div class="chain-title" data-ru="Задание создаётся" data-kg="Тапшырма түзүлөт">Задание создаётся</div>
-      <div class="chain-sub" data-ru="Сообщество получает задачу" data-kg="Коомдоштук тапшырма алат">Сообщество получает</div>
+      <div class="chain-title" data-ru="Задание создаётся" data-kg="Тапшырма түзүлөт" data-tr="Görev oluşturulur">Задание создаётся</div>
+      <div class="chain-sub" data-ru="Сообщество получает задачу" data-kg="Коомдоштук тапшырма алат" data-tr="Topluluk görevi alır">Сообщество получает</div>
     </div>
     <div class="chain-step">
       <div class="chain-icon">♻️</div>
-      <div class="chain-title" data-ru="Сдача переработчику" data-kg="Кайра иштетүүчүгө тапшыруу">Сдача переработчику</div>
-      <div class="chain-sub" data-ru="130+ зарегистрированных" data-kg="130+ катталган">130+ зарегистрированных</div>
+      <div class="chain-title" data-ru="Сдача переработчику" data-kg="Кайра иштетүүчүгө тапшыруу" data-tr="Geri dönüşümcüye teslim">Сдача переработчику</div>
+      <div class="chain-sub" data-ru="130+ зарегистрированных" data-kg="130+ катталган" data-tr="130+ kayıtlı">130+ зарегистрированных</div>
     </div>
     <div class="chain-step">
       <div class="chain-icon">💰</div>
-      <div class="chain-title" data-ru="Вознаграждение" data-kg="Сыйлык">Вознаграждение</div>
-      <div class="chain-sub" data-ru="Mbank / Elsom / эко-кредиты" data-kg="Mbank / Elsom / эко-кредиттер">Mbank / Elsom</div>
+      <div class="chain-title" data-ru="Вознаграждение" data-kg="Сыйлык" data-tr="Ödül">Вознаграждение</div>
+      <div class="chain-sub" data-ru="Mbank / Elsom / эко-кредиты" data-kg="Mbank / Elsom / эко-кредиттер" data-tr="Mbank / Elsom / eko-kredi">Mbank / Elsom</div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section">
-  <div class="section-label" style="color:var(--gold);" data-ru="Присоединяйтесь" data-kg="Кошулуңуз">Присоединяйтесь</div>
-  <h2 class="section-title" data-ru="Стать партнёром, инвестором или пилотным регионом" data-kg="Өнөктөш, инвестор же пилоттук аймак болуу">Стать партнёром, инвестором или пилотным регионом</h2>
-  <p class="section-sub" data-ru="Ищем первых инвесторов, гранты UNDP/ADB, государственных партнёров и пилотные аймаки вокруг Иссык-Куля." data-kg="Биринчи инвесторлорду, UNDP/ADB гранттарын жана пилоттук аймактарды издейбиз.">
+  <div class="section-label" style="color:var(--gold);" data-ru="Присоединяйтесь" data-kg="Кошулуңуз" data-tr="Katılın">Присоединяйтесь</div>
+  <h2 class="section-title" data-ru="Стать партнёром, инвестором или пилотным регионом" data-kg="Өнөктөш, инвестор же пилоттук аймак болуу" data-tr="Ortak, yatırımcı veya pilot bölge olun">Стать партнёром, инвестором или пилотным регионом</h2>
+  <p class="section-sub" data-ru="Ищем первых инвесторов, гранты UNDP/ADB, государственных партнёров и пилотные аймаки вокруг Иссык-Куля." data-kg="Биринчи инвесторлорду, UNDP/ADB гранттарын жана пилоттук аймактарды издейбиз." data-tr="İlk yatırımcılar, UNDP/ADB hibeleri, devlet ortakları ve Issık-Göl çevresinde pilot bölgeler arıyoruz.">
     Ищем первых инвесторов, гранты UNDP/ADB, государственных партнёров и пилотные аймаки вокруг Иссык-Куля.
   </p>
   <div class="cta-buttons">
-    <a href="mailto:hello@tazajer.kg" class="btn-gold" data-ru="Связаться с командой" data-kg="Команда менен байланышуу">Связаться с командой</a>
-    <button class="btn-white" onclick="alert('Pitch deck — скоро!')" data-ru="Скачать Pitch Deck" data-kg="Pitch Deck жүктөө">Скачать Pitch Deck</button>
+    <a href="mailto:hello@tazajer.kg" class="btn-gold" data-ru="Связаться с командой" data-kg="Команда менен байланышуу" data-tr="Ekiple iletişime geç">Связаться с командой</a>
+    <button class="btn-white" onclick="alert('Pitch deck — скоро!')" data-ru="Скачать Pitch Deck" data-kg="Pitch Deck жүктөө" data-tr="Pitch Deck İndir">Скачать Pitch Deck</button>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">ТазаЖер EcoChain</div>
-  <div data-ru="MVP · Апрель 2026 · Бишкек, Кыргызстан" data-kg="MVP · Апрель 2026 · Бишкек, Кыргызстан">MVP · Апрель 2026 · Бишкек, Кыргызстан</div>
+  <div data-ru="MVP · Апрель 2026 · Бишкек, Кыргызстан" data-kg="MVP · Апрель 2026 · Бишкек, Кыргызстан" data-tr="MVP · Nisan 2026 · Bişkek, Kırgızistan">MVP · Апрель 2026 · Бишкек, Кыргызстан</div>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// ─── CONFIG: вставь ngrok URL когда получишь от Colab ────────
+// Пример: const COLAB_API = 'https://abc123.ngrok-free.app';
+const COLAB_API = null; // null = использовать демо-режим
+
 // ─── LANGUAGE ───────────────────────────────────────────────
 let currentLang = 'ru';
 function setLang(lang) {
   currentLang = lang;
+  document.body.classList.remove('lang-ru','lang-kg','lang-tr');
+  document.body.classList.add('lang-' + lang);
   document.querySelectorAll('[data-ru]').forEach(el => {
     el.textContent = el.getAttribute('data-' + lang) || el.getAttribute('data-ru');
   });
@@ -670,14 +683,20 @@ function setLang(lang) {
   document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
 }
 
-// ─── WASTE DATA ──────────────────────────────────────────────
+// ─── WASTE DATA (RU / KG / TR) ───────────────────────────────
 const wasteData = [
-  { ru: 'Пластик ПЭТ', kg: 'ПЭТ пластик', conf: 91, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴' }, volume: '~8–12 кг', reward: 220 },
-  { ru: 'Пластиковые пакеты', kg: 'Пластик баштыкчалар', conf: 87, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴' }, volume: '~3–5 кг', reward: 180 },
-  { ru: 'Стеклянные бутылки', kg: 'Айнек бөтөлкөлөр', conf: 94, priority: { ru: 'Средний 🟡', kg: 'Орточо 🟡' }, volume: '~5–7 кг', reward: 150 },
-  { ru: 'Органические отходы', kg: 'Органикалык калдыктар', conf: 78, priority: { ru: 'Низкий 🟢', kg: 'Төмөнкү 🟢' }, volume: '~10–15 кг', reward: 90 },
-  { ru: 'Металлические банки', kg: 'Металл банкалар', conf: 89, priority: { ru: 'Средний 🟡', kg: 'Орточо 🟡' }, volume: '~2–4 кг', reward: 200 },
-  { ru: 'Смешанный мусор', kg: 'Аралаш таштанды', conf: 82, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴' }, volume: '~15–20 кг', reward: 260 },
+  { ru: 'Пластик ПЭТ', kg: 'ПЭТ пластик', tr: 'PET Plastik',
+    conf: 91, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴', tr: 'Yüksek 🔴' }, volume: '~8–12 кг', reward: 220 },
+  { ru: 'Пластиковые пакеты', kg: 'Пластик баштыкчалар', tr: 'Plastik poşetler',
+    conf: 87, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴', tr: 'Yüksek 🔴' }, volume: '~3–5 кг', reward: 180 },
+  { ru: 'Стеклянные бутылки', kg: 'Айнек бөтөлкөлөр', tr: 'Cam şişeler',
+    conf: 94, priority: { ru: 'Средний 🟡', kg: 'Орточо 🟡', tr: 'Orta 🟡' }, volume: '~5–7 кг', reward: 150 },
+  { ru: 'Органические отходы', kg: 'Органикалык калдыктар', tr: 'Organik atık',
+    conf: 78, priority: { ru: 'Низкий 🟢', kg: 'Төмөнкү 🟢', tr: 'Düşük 🟢' }, volume: '~10–15 кг', reward: 90 },
+  { ru: 'Металлические банки', kg: 'Металл банкалар', tr: 'Metal kutular',
+    conf: 89, priority: { ru: 'Средний 🟡', kg: 'Орточо 🟡', tr: 'Orta 🟡' }, volume: '~2–4 кг', reward: 200 },
+  { ru: 'Смешанный мусор', kg: 'Аралаш таштанды', tr: 'Karışık çöp',
+    conf: 82, priority: { ru: 'Высокий 🔴', kg: 'Жогорку 🔴', tr: 'Yüksek 🔴' }, volume: '~15–20 кг', reward: 260 },
 ];
 
 // ─── AI DEMO ─────────────────────────────────────────────────
@@ -691,8 +710,11 @@ const aiStatusText = document.getElementById('ai-status-text');
 
 const statusMessages = {
   ru: ['Инициализация модели...', 'Загрузка весов YOLOv8...', 'Препроцессинг изображения...', 'Детекция объектов...', 'Классификация отходов...', 'Расчёт вознаграждения...'],
-  kg: ['Модель баштоо...', 'YOLOv8 салмактарын жүктөө...', 'Сүрөттү иштетүү...', 'Объектилерди аныктоо...', 'Калдыктарды классификациялоо...', 'Сыйлык эсептөө...']
+  kg: ['Модель баштоо...', 'YOLOv8 салмактарын жүктөө...', 'Сүрөттү иштетүү...', 'Объектилерди аныктоо...', 'Калдыктарды классификациялоо...', 'Сыйлык эсептөө...'],
+  tr: ['Model başlatılıyor...', 'YOLOv8 ağırlıkları yükleniyor...', 'Görüntü işleniyor...', 'Nesneler tespit ediliyor...', 'Atıklar sınıflandırılıyor...', 'Ödül hesaplanıyor...']
 };
+
+let lastImageBase64 = null;
 
 fileInput.addEventListener('change', e => {
   const file = e.target.files[0];
@@ -703,6 +725,7 @@ fileInput.addEventListener('change', e => {
     previewImg.style.display = 'block';
     uploadZone.style.display = 'none';
     aiResult.style.display = 'none';
+    lastImageBase64 = ev.target.result.split(',')[1]; // strip data:image/...;base64,
     runAI();
   };
   reader.readAsDataURL(file);
@@ -727,22 +750,77 @@ function runAI() {
     }
     if (progress >= 100) {
       clearInterval(interval);
-      setTimeout(showResult, 300);
+      if (COLAB_API && lastImageBase64) {
+        callColabAPI(lastImageBase64);
+      } else {
+        setTimeout(showResult, 300);
+      }
     }
   }, 80);
+}
+
+// ─── REAL COLAB API CALL ──────────────────────────────────────
+async function callColabAPI(base64image) {
+  try {
+    const response = await fetch(COLAB_API + '/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: base64image })
+    });
+    if (!response.ok) throw new Error('API error');
+    const data = await response.json();
+    // Expected response: { label: "plastic_bottle", confidence: 0.91, reward: 220 }
+    showResultFromAPI(data);
+  } catch (err) {
+    console.warn('Colab API недоступен, используем демо-режим:', err);
+    showResult();
+  }
+}
+
+function showResultFromAPI(data) {
+  aiAnalyzing.style.display = 'none';
+
+  const labelMap = {
+    ru: data.label_ru || data.label || 'Неизвестно',
+    kg: data.label_kg || data.label || 'Белгисиз',
+    tr: data.label_tr || data.label || 'Bilinmiyor'
+  };
+  const conf = Math.round((data.confidence || 0.85) * 100);
+  const reward = data.reward || 150;
+
+  const priorityMap = {
+    high:   { ru: 'Высокий 🔴',  kg: 'Жогорку 🔴', tr: 'Yüksek 🔴' },
+    medium: { ru: 'Средний 🟡',  kg: 'Орточо 🟡',  tr: 'Orta 🟡' },
+    low:    { ru: 'Низкий 🟢',   kg: 'Төмөнкү 🟢', tr: 'Düşük 🟢' }
+  };
+  const pLevel = conf >= 85 ? 'high' : conf >= 70 ? 'medium' : 'low';
+
+  document.getElementById('waste-type').textContent = labelMap[currentLang];
+  document.getElementById('confidence-val').textContent = conf + '%';
+  document.getElementById('confidence-bar').style.width = conf + '%';
+  document.getElementById('priority-val').textContent = priorityMap[pLevel][currentLang];
+  document.getElementById('volume-val').textContent = data.volume || '~5–10 кг';
+  document.getElementById('reward-amount').textContent = '+' + reward + ' сом';
+
+  revealResult();
 }
 
 function showResult() {
   aiAnalyzing.style.display = 'none';
   const pick = wasteData[Math.floor(Math.random() * wasteData.length)];
+  const lang = currentLang;
 
-  document.getElementById('waste-type').textContent = currentLang === 'kg' ? pick.kg : pick.ru;
+  document.getElementById('waste-type').textContent = pick[lang] || pick.ru;
   document.getElementById('confidence-val').textContent = pick.conf + '%';
   document.getElementById('confidence-bar').style.width = pick.conf + '%';
-  document.getElementById('priority-val').textContent = currentLang === 'kg' ? pick.priority.kg : pick.priority.ru;
+  document.getElementById('priority-val').textContent = pick.priority[lang] || pick.priority.ru;
   document.getElementById('volume-val').textContent = pick.volume;
   document.getElementById('reward-amount').textContent = '+' + pick.reward + ' сом';
 
+  revealResult();
+}
+
+function revealResult() {
   aiResult.style.display = 'block';
   aiResult.style.opacity = '0';
   aiResult.style.transform = 'translateY(10px)';
@@ -760,14 +838,22 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const hotspots = [
-  { lat: 42.87, lng: 74.59, name: 'Бишкек — Ала-Тоо', type: 'high', ru: 'Пластик, ~2.1 тонны', kg: 'Пластик, ~2.1 тонна' },
-  { lat: 42.62, lng: 77.09, name: 'Чолпон-Ата', type: 'high', ru: 'Берег Иссык-Куля, ~1.8 тонны', kg: 'Ысык-Көл жагасы, ~1.8 тонна' },
-  { lat: 42.48, lng: 78.39, name: 'Каракол', type: 'medium', ru: 'Пластик + органика, ~0.9 тонны', kg: 'Пластик + органика, ~0.9 тонна' },
-  { lat: 40.52, lng: 72.79, name: 'Ош', type: 'high', ru: 'Смешанный мусор, ~1.5 тонны', kg: 'Аралаш таштанды, ~1.5 тонна' },
-  { lat: 40.93, lng: 73.00, name: 'Жалал-Абад', type: 'medium', ru: 'Стекло + пластик, ~0.6 тонны', kg: 'Айнек + пластик, ~0.6 тонна' },
-  { lat: 41.42, lng: 75.99, name: 'Нарын', type: 'medium', ru: 'Горный маршрут, ~0.4 тонны', kg: 'Тоо жолу, ~0.4 тонна' },
-  { lat: 42.72, lng: 74.24, name: 'Кара-Балта', type: 'clean', ru: 'Очищено 3 дня назад', kg: '3 күн мурун тазаланды' },
-  { lat: 42.18, lng: 76.07, name: 'Балыкчы', type: 'medium', ru: 'Рыболовные сети + пластик', kg: 'Балык торлору + пластик' },
+  { lat: 42.87, lng: 74.59, name: 'Бишкек — Ала-Тоо', type: 'high',
+    ru: 'Пластик, ~2.1 тонны', kg: 'Пластик, ~2.1 тонна', tr: 'Plastik, ~2.1 ton' },
+  { lat: 42.62, lng: 77.09, name: 'Чолпон-Ата', type: 'high',
+    ru: 'Берег Иссык-Куля, ~1.8 тонны', kg: 'Ысык-Көл жагасы, ~1.8 тонна', tr: 'Issık-Göl kıyısı, ~1.8 ton' },
+  { lat: 42.48, lng: 78.39, name: 'Каракол', type: 'medium',
+    ru: 'Пластик + органика, ~0.9 тонны', kg: 'Пластик + органика, ~0.9 тонна', tr: 'Plastik + organik, ~0.9 ton' },
+  { lat: 40.52, lng: 72.79, name: 'Ош', type: 'high',
+    ru: 'Смешанный мусор, ~1.5 тонны', kg: 'Аралаш таштанды, ~1.5 тонна', tr: 'Karışık çöp, ~1.5 ton' },
+  { lat: 40.93, lng: 73.00, name: 'Жалал-Абад', type: 'medium',
+    ru: 'Стекло + пластик, ~0.6 тонны', kg: 'Айнек + пластик, ~0.6 тонна', tr: 'Cam + plastik, ~0.6 ton' },
+  { lat: 41.42, lng: 75.99, name: 'Нарын', type: 'medium',
+    ru: 'Горный маршрут, ~0.4 тонны', kg: 'Тоо жолу, ~0.4 тонна', tr: 'Dağ rotası, ~0.4 ton' },
+  { lat: 42.72, lng: 74.24, name: 'Кара-Балта', type: 'clean',
+    ru: 'Очищено 3 дня назад', kg: '3 күн мурун тазаланды', tr: '3 gün önce temizlendi' },
+  { lat: 42.18, lng: 76.07, name: 'Балыкчы', type: 'medium',
+    ru: 'Рыболовные сети + пластик', kg: 'Балык торлору + пластик', tr: 'Balık ağları + plastik' },
 ];
 
 const colors = { high: '#c0392b', medium: '#e8a020', clean: '#1a6b3c' };
@@ -778,7 +864,7 @@ hotspots.forEach(h => {
     fillColor: colors[h.type], color: '#fff', weight: 2,
     opacity: 1, fillOpacity: 0.85
   }).addTo(map);
-  marker.bindPopup(`<strong>${h.name}</strong><br/>${h.ru}<br/><small style="color:#1a6b3c;">Таза Жер EcoChain</small>`);
+  marker.bindPopup(`<strong>${h.name}</strong><br/>${h[currentLang] || h.ru}<br/><small style="color:#1a6b3c;">Таза Жер EcoChain</small>`);
 });
 
 // ─── REVEAL ON SCROLL ─────────────────────────────────────────
